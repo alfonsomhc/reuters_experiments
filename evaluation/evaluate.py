@@ -10,7 +10,12 @@ def optimize_threshold_for_fscore(model, X_dev, Y_dev):
     best_fscore = 0
     best_threshold = 0
     for i in np.arange(0,1,0.1):
-        preds = model.predict(X_dev.todense())
+        try:
+            X_dev = X_dev.todense()
+        except AttributeError as e:
+            if not "'numpy.ndarray' object has no attribute 'todense'" in e.message:
+                raise
+        preds = model.predict(X_dev)
         preds[preds>= i] = 1
         preds[preds< i] = 0
         fscore_i = metrics.f1_score(Y_dev, preds, average ='macro')

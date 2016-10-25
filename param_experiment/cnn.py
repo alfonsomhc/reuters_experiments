@@ -67,7 +67,7 @@ def train_evaluate_cnn(X_train, Y_train, X_test, Y_test, data_file, nb_hidden,
                       optimizer='adam')
         print('Training model...')
         history = model.fit(X_train, Y_train, nb_epoch=nb_epoch,
-                            batch_size=batch_size, verbose=1, validation_split=0.1)
+                            batch_size=batch_size, verbose=2, validation_split=0.1)
         model.save(file_name)
 
     print('Evaluating model...')
