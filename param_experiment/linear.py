@@ -8,13 +8,13 @@ def train_evaluate_linear(X_train, Y_train, X_test, Y_test, data_file, loss, cla
     """
     For each category, create targets, train, test and evaluate
     """
-    
+
     nb_classes = Y_train.shape[1]
-    file_name = ("models/linear_loss_" + str(loss) + 
-                "_class_weight_" + str(class_weight) + "_" + 
+    file_name = ("models/linear_loss_" + str(loss) +
+                "_class_weight_" + str(class_weight) + "_" +
                 data_file.replace("data/", ""))
     print(file_name)
-    
+
     if os.path.isfile(file_name):
         print('Read previously trained model...')
         model = joblib.load(file_name)
@@ -26,8 +26,8 @@ def train_evaluate_linear(X_train, Y_train, X_test, Y_test, data_file, loss, cla
             train_targets = Y_train[:,i]
             model[i].fit(X_train, train_targets)
         joblib.dump(model, file_name)
-    
-    print('Evaluating models...')    
+
+    print('Evaluating models...')
     fscore = [None]* nb_classes
     for i in xrange(0, nb_classes):
         test_targets = Y_test[:,i]

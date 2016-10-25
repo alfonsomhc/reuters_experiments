@@ -14,18 +14,19 @@ drop_out = 0.2
 nb_epoch = 10
 batch_size = 32
 
-def train_evaluate_cnn(X_train, Y_train, X_test, Y_test, data_file, nb_hidden, 
+def train_evaluate_cnn(X_train, Y_train, X_test, Y_test, data_file, nb_hidden,
             max_words, max_len, embedding_dims, nb_filter, filter_length):
     """
     """
 
-    file_name = ("models/cnn_nb_hidden_" + str(nb_hidden) + 
-                    "_max_words_" + str(max_words) + "_" + 
-                    "_max_len_" + str(max_len) + "_" + 
-                    "_embedding_dims_" + str(embedding_dims) + "_" + 
-                    "_nb_filter_" + str(nb_filter) + "_" + 
-                    "_filter_length_" + str(filter_length) + "_" + 
+    file_name = ("models/cnn_nb_hidden_" + str(nb_hidden) +
+                    "_max_words_" + str(max_words) + "_" +
+                    "_max_len_" + str(max_len) + "_" +
+                    "_embedding_dims_" + str(embedding_dims) + "_" +
+                    "_nb_filter_" + str(nb_filter) + "_" +
+                    "_filter_length_" + str(filter_length) + "_" +
                     data_file.replace("data/", "").replace(".pkl", ".h5"))
+    print(file_name)
 
     if os.path.isfile(file_name):
         print('Read previously trained model...')
