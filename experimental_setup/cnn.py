@@ -8,8 +8,8 @@ from __future__ import print_function
 import numpy as np
 np.random.seed(1337)  # for reproducibility
 from keras.models import Sequential, load_model
-from keras.layers import Dense, Dropout, Activation, Flatten
-from keras.layers import Embedding, Convolution1D, MaxPooling1D
+from keras.layers import Dense, Dropout, Activation
+from keras.layers import Embedding, Convolution1D, GlobalMaxPooling1D
 from evaluation.evaluate import optimize_threshold_for_fscore
 import os
 
@@ -64,11 +64,7 @@ def train_evaluate_cnn(X_train, Y_train, X_test, Y_test, data_file, nb_hidden,
                                 activation='relu',
                                 subsample_length=1))
         # we use max pooling:
-        model.add(MaxPooling1D(pool_length=model.output_shape[1]))
-
-        # We flatten the output of the conv layer,
-        # so that we can add a vanilla dense layer:
-        model.add(Flatten())
+        model.add(GlobalMaxPooling1D())
 
         # We add a vanilla hidden layer:
         model.add(Dense(nb_hidden))
