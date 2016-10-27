@@ -12,14 +12,14 @@ for nb_hidden in [200, 512]:
         for max_words in [1000, 5000, 7000, 15000]:
             for vectorizer in ["count", "tfidf"]:
                 (X_train, Y_train),(X_test, Y_test), data_file = create_dataset(
-                    raw_text_processor = "vector", 
+                    raw_text_processor = "vector",
                     max_words = max_words,
                     vectorizer = vectorizer)
-                score = train_evaluate_mlp(X_train, Y_train, X_test, Y_test, 
-                    data_file = data_file, 
-                    nb_hidden = nb_hidden, 
+                score = train_evaluate_mlp(X_train, Y_train, X_test, Y_test,
+                    data_file = data_file,
+                    nb_hidden = nb_hidden,
                     drop_out = drop_out)
-                results.append(dict(nb_hidden=nb_hidden, vectorizer=vectorizer, 
+                results.append(dict(nb_hidden=nb_hidden, vectorizer=vectorizer,
                     max_words=max_words,drop_out=drop_out, score=score))
 
 results = pd.DataFrame(results)

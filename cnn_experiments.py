@@ -7,11 +7,11 @@ import pandas as pd
 from utils.print_full_dataframe import print_full
 
 results = []
-for nb_hidden in [100]:
-    for embedding_dims in [20]:
+for nb_hidden in [120]:
+    for embedding_dims in [150]:
         for max_words in [15000]:
             for max_len in [500]:
-                for nb_filter in [250]:
+                for nb_filter in [100]:
                     for filter_length in [12]:
                         (X_train, Y_train),(X_test,Y_test), data_file = create_dataset(
                             raw_text_processor = "sequence",
