@@ -47,5 +47,5 @@ def train_evaluate_mlp(X_train, Y_train, X_test, Y_test, data_file, nb_hidden, d
     fscore, threshold = optimize_threshold_for_fscore(model, X_test, Y_test)
     print("Best F-score = {}".format(fscore))
     print("Best threshold = {}".format(threshold))
-    
+
     return fscore

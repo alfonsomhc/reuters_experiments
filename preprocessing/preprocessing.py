@@ -35,7 +35,7 @@ def tokenize(text):
                   words)));
     # Remove words that not only contains words, and impose minimum length
     p = re.compile('[a-zA-Z]+');
-    filtered_tokens = list(filter(lambda token: p.match(token) 
+    filtered_tokens = list(filter(lambda token: p.match(token)
         and len(token) >= min_length, tokens))
     return [ft.encode('utf8') for ft in filtered_tokens]
 
@@ -55,10 +55,10 @@ def create_dataset(raw_text_processor, max_words, **kwargs):
                 "_max_words_" + str(max_words) + "_" +
                 str(kwargs).translate(None, """ '"{}""")
                 .replace(":","_").replace(",","_") + ".pkl")
-    
+
     if os.path.isfile(file_name):
         print('Read previously computed data and targets...')
-        (train_data, train_targets, 
+        (train_data, train_targets,
             test_data, test_targets) = joblib.load(file_name)
     else:
         print('Create data and targets...')
@@ -85,7 +85,7 @@ def create_dataset(raw_text_processor, max_words, **kwargs):
         train_targets = mlb.fit_transform(train_cats)
         test_targets = mlb.transform(test_cats)
 
-        joblib.dump((train_data, train_targets, test_data, test_targets), 
+        joblib.dump((train_data, train_targets, test_data, test_targets),
             file_name)
 
     return (train_data, train_targets), (test_data, test_targets), file_name
@@ -124,5 +124,5 @@ def raw_text_to_vector(train_docs, test_docs, max_words, vectorizer):
                         norm='l2');
     train_data = vectorizer.fit_transform(train_docs)
     test_data = vectorizer.transform(test_docs)
-    
+
     return train_data, test_data
