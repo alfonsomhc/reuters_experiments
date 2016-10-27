@@ -7,11 +7,11 @@ np.random.seed(1337)  # for reproducibility
 from keras.models import Sequential, load_model
 from keras.layers import Dense, Dropout, Activation, Flatten
 from keras.layers import Embedding, Convolution1D, MaxPooling1D
-from evaluate import optimize_threshold_for_fscore
+from evaluation.evaluate import optimize_threshold_for_fscore
 import os
 
 drop_out = 0.2
-nb_epoch = 10
+nb_epoch = 20
 batch_size = 32
 
 def train_evaluate_cnn(X_train, Y_train, X_test, Y_test, data_file, nb_hidden,
@@ -68,7 +68,7 @@ def train_evaluate_cnn(X_train, Y_train, X_test, Y_test, data_file, nb_hidden,
                       optimizer='adam')
         print('Training model...')
         history = model.fit(X_train, Y_train, nb_epoch=nb_epoch,
-                            batch_size=batch_size, verbose=2, validation_split=0.1)
+                            batch_size=batch_size, verbose=1, validation_split=0.1)
         model.save(file_name)
 
     print('Evaluating model...')
@@ -77,3 +77,5 @@ def train_evaluate_cnn(X_train, Y_train, X_test, Y_test, data_file, nb_hidden,
     fscore, threshold = optimize_threshold_for_fscore(model, X_test, Y_test)
     print("Best F-score = {}".format(fscore))
     print("Best threshold = {}".format(threshold))
+
+    return fscore

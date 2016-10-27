@@ -9,7 +9,7 @@ import numpy as np
 np.random.seed(1337)  # for reproducibility
 from keras.models import Sequential, load_model
 from keras.layers import Dense, Dropout, Activation
-from evaluate import optimize_threshold_for_fscore
+from evaluation.evaluate import optimize_threshold_for_fscore
 import os
 
 batch_size = 32
@@ -47,3 +47,5 @@ def train_evaluate_mlp(X_train, Y_train, X_test, Y_test, data_file, nb_hidden, d
     fscore, threshold = optimize_threshold_for_fscore(model, X_test, Y_test)
     print("Best F-score = {}".format(fscore))
     print("Best threshold = {}".format(threshold))
+    
+    return fscore

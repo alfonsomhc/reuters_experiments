@@ -33,4 +33,6 @@ def train_evaluate_linear(X_train, Y_train, X_test, Y_test, data_file, loss, cla
         test_targets = Y_test[:,i]
         predicted = model[i].predict(X_test)
         fscore[i] = f1_score(test_targets, predicted)
-    print("Fscore = {}".format(sum(fscore)/len(fscore)) )
+    average_fscore = sum(fscore)/len(fscore)
+    print("Average F-Score = {}".format(average_fscore))
+    return average_fscore

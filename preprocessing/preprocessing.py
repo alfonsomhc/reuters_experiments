@@ -35,7 +35,8 @@ def tokenize(text):
                   words)));
     # Remove words that not only contains words, and impose minimum length
     p = re.compile('[a-zA-Z]+');
-    filtered_tokens = list(filter(lambda token: p.match(token) and len(token) >= min_length, tokens));
+    filtered_tokens = list(filter(lambda token: p.match(token) 
+        and len(token) >= min_length, tokens))
     return [ft.encode('utf8') for ft in filtered_tokens]
 
 
@@ -50,13 +51,15 @@ def create_dataset(raw_text_processor, max_words, **kwargs):
         data and targets for training and testing
         file_name: named of the pickle file used to catch the data
     """
-    file_name = ("data/raw_text_processor_" + raw_text_processor + "_" +
+    file_name = ("data/raw_text_processor_" + raw_text_processor +
+                "_max_words_" + str(max_words) + "_" +
                 str(kwargs).translate(None, """ '"{}""")
                 .replace(":","_").replace(",","_") + ".pkl")
     
     if os.path.isfile(file_name):
         print('Read previously computed data and targets...')
-        (train_data, train_targets, test_data, test_targets) = joblib.load(file_name)
+        (train_data, train_targets, 
+            test_data, test_targets) = joblib.load(file_name)
     else:
         print('Create data and targets...')
         fileids = reuters.fileids()
@@ -67,10 +70,11 @@ def create_dataset(raw_text_processor, max_words, **kwargs):
         test_docs = [reuters.raw(doc_id) for doc_id in fileids
                         if doc_id.startswith("test")]
         if raw_text_processor == "vector":
-            train_data, test_data = raw_text_to_vector(train_docs, test_docs, max_words, kwargs["vectorizer"])
+            train_data, test_data = raw_text_to_vector(
+                train_docs, test_docs, max_words, kwargs["vectorizer"])
         elif raw_text_processor == "sequence":
-            train_data, test_data = raw_text_to_sequences(train_docs, test_docs, max_words, kwargs["max_len"])
-        
+            train_data, test_data = raw_text_to_sequences(
+                train_docs, test_docs, max_words, kwargs["max_len"])
 
         # Create targets
         train_cats = [reuters.categories(doc_id) for doc_id in fileids
@@ -81,7 +85,8 @@ def create_dataset(raw_text_processor, max_words, **kwargs):
         train_targets = mlb.fit_transform(train_cats)
         test_targets = mlb.transform(test_cats)
 
-        joblib.dump((train_data, train_targets, test_data, test_targets), file_name)
+        joblib.dump((train_data, train_targets, test_data, test_targets), 
+            file_name)
 
     return (train_data, train_targets), (test_data, test_targets), file_name
 
@@ -95,8 +100,10 @@ def raw_text_to_sequences(train_docs, test_docs, max_words, max_len):
     """
     t = KerasTokenizer(nb_words=max_words)
     t.fit_on_texts([' '.join(tokenize(doc)) for doc in train_docs])
-    train_data = t.texts_to_sequences([' '.join(tokenize(doc)) for doc in train_docs])
-    test_data = t.texts_to_sequences([' '.join(tokenize(doc)) for doc in test_docs])
+    train_data = t.texts_to_sequences(
+        [' '.join(tokenize(doc)) for doc in train_docs])
+    test_data = t.texts_to_sequences(
+        [' '.join(tokenize(doc)) for doc in test_docs])
     train_data = sequence.pad_sequences(train_data, maxlen=max_len)
     test_data = sequence.pad_sequences(test_data, maxlen=max_len)
     return train_data, test_data

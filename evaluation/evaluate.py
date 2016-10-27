@@ -13,7 +13,7 @@ def optimize_threshold_for_fscore(model, X_dev, Y_dev):
         try:
             X_dev = X_dev.todense()
         except AttributeError as e:
-            if not "'numpy.ndarray' object has no attribute 'todense'" in e.message:
+            if not "object has no attribute 'todense'" in e.message:
                 raise
         preds = model.predict(X_dev)
         preds[preds>= i] = 1
