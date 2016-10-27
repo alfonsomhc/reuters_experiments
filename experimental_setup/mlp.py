@@ -1,7 +1,8 @@
 """
 mlp.py
 
-Document classification based on Multilayer Perceptron and bag of words
+Parameterized experiment for Multi-Layer Perceptrons.
+Some sections of the code are based on examples available in Keras library.
 """
 
 from __future__ import print_function
@@ -17,6 +18,13 @@ nb_epoch = 5
 
 def train_evaluate_mlp(X_train, Y_train, X_test, Y_test, data_file, nb_hidden, drop_out):
     """
+    Document classification based on bag of words and Multi-Layer Perceptron.
+    Train a MLP for multi-label classification, then evaluate.
+    Input:
+        training and test data and targets
+        data_file: file name for data cached in preprocessing module
+        nb_hidden: number of hidden nodes
+        drop_out: drop out rate
     """
     file_name = ("models/mlp_nb_hidden_" + str(nb_hidden) +
                     "_drop_out_" + str(drop_out) + "_" +
@@ -39,6 +47,7 @@ def train_evaluate_mlp(X_train, Y_train, X_test, Y_test, data_file, nb_hidden, d
         print('Training model...')
         history = model.fit(X_train.todense(), Y_train, nb_epoch=nb_epoch,
                             batch_size=batch_size, verbose=2, validation_split=0.1)
+        # Cache model
         model.save(file_name)
 
     print('Evaluating model...')

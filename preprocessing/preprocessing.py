@@ -1,8 +1,11 @@
 """
 preprocessing.py
 
-Preprocess Reuters dataset and create data and targets for training and testing
-text classification models.
+Feature preprocessing and extraction for text classification models in 
+Reuters dataset.
+
+Some sections of the code (e.g. tokenizer)are based on:
+https://miguelmalvarez.com/2015/03/20/classifying-reuters-21578-collection-with-python-representing-the-data
 """
 from __future__ import print_function
 import re
@@ -42,14 +45,14 @@ def tokenize(text):
 
 def create_dataset(raw_text_processor, max_words, **kwargs):
     """
-    Compute data and targets for training and testing sets (Reuters dataset)
+    Compute data and targets for training and testing.
     Input:
         raw_text_processor: one of the processors defined in this file (below)
         max_words: maximum number of words to consider
         kwargs: key word arguments for the processor
     Output:
         data and targets for training and testing
-        file_name: named of the pickle file used to catch the data
+        file_name: name of the pickle file used to cache the data
     """
     file_name = ("data/raw_text_processor_" + raw_text_processor +
                 "_max_words_" + str(max_words) + "_" +
@@ -84,7 +87,8 @@ def create_dataset(raw_text_processor, max_words, **kwargs):
         mlb = MultiLabelBinarizer()
         train_targets = mlb.fit_transform(train_cats)
         test_targets = mlb.transform(test_cats)
-
+        
+        # Cache data and targets
         joblib.dump((train_data, train_targets, test_data, test_targets),
             file_name)
 
@@ -93,8 +97,8 @@ def create_dataset(raw_text_processor, max_words, **kwargs):
 
 def raw_text_to_sequences(train_docs, test_docs, max_words, max_len):
     """
-    Transforms raw text to a sequence (list of word indices)
-    We tokenize with the function defined in this file, i.e. tokenize()
+    Transform raw text to a sequence (list of word indices)
+    Tokenize with the function defined in this file, i.e. tokenize()
     KerasTokenizer is used to transform list of words to list of indices
     This involves creating a dummy text with the list of words.
     """
@@ -106,6 +110,7 @@ def raw_text_to_sequences(train_docs, test_docs, max_words, max_len):
         [' '.join(tokenize(doc)) for doc in test_docs])
     train_data = sequence.pad_sequences(train_data, maxlen=max_len)
     test_data = sequence.pad_sequences(test_data, maxlen=max_len)
+    
     return train_data, test_data
 
 

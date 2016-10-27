@@ -6,6 +6,15 @@ import numpy as np
 
 def optimize_threshold_for_fscore(model, X_dev, Y_dev):
     """
+    Find the best F-score and threshold for a model.
+    Input:
+        model: trained model with a predict method that outputs probabilities
+            or scores (Keras' models, but not Scikit-Learn's).
+        X_dev: development data
+        Y_dev: development targets
+    Output:
+        - best_fscore: optimal f-score
+        - best_threshold: decision threshold that optimized f-score
     """
     best_fscore = 0
     best_threshold = 0
