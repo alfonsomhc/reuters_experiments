@@ -11,8 +11,8 @@ for nb_hidden in [120]:
     for embedding_dims in [150]:
         for max_words in [15000]:
             for max_len in [500]:
-                for nb_filter in [100]:
-                    for filter_length in [12]:
+                for nb_filter in [[50,50]]:
+                    for filter_length in [[3,12]]:
                         (X_train, Y_train),(X_test,Y_test), data_file = create_dataset(
                             raw_text_processor = "sequence",
                             max_words = max_words,
