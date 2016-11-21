@@ -54,10 +54,15 @@ def create_dataset(raw_text_processor, max_words, **kwargs):
         data and targets for training and testing
         file_name: name of the pickle file used to cache the data
     """
-    file_name = ("data/raw_text_processor_" + raw_text_processor +
-                "_max_words_" + str(max_words) + "_" +
-                str(kwargs).translate(None, """ '"{}""")
-                .replace(":","_").replace(",","_") + ".pkl")
+    file_name_base = ("data/raw_text_processor_{}_max_words_{}"
+                        .format(raw_text_processor, max_words))
+        
+    if raw_text_processor == "vector":
+        file_name = (file_name_base + "_vectorizer_{}.pkl"
+                    .format(kwargs["vectorizer"]))
+    else:
+        file_name = (file_name_base + "_max_len_{}.pkl"
+                    .format(kwargs["max_len"]))
 
     if os.path.isfile(file_name):
         print('Read previously computed data and targets...')

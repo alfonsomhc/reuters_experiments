@@ -58,3 +58,62 @@ max_words         15000.00000
 nb_filter           100.00000
 nb_hidden           100.00000
 score                 0.42594
+
+embedding_dims      150.000000
+filter_length        12.000000
+max_len             500.000000
+max_words         15000.000000
+nb_filter           100.000000
+nb_hidden           120.000000
+score                 0.439838
+Name: 0, dtype: float64
+
+
+embedding_dims         150
+filter_length      [3, 12]
+max_len                500
+max_words            15000
+nb_filter         [50, 50]
+nb_hidden              120
+score             0.425747
+Name: 0, dtype: object
+
+embedding_dims         100
+filter_length      [3, 12]
+max_len                500
+max_words            15000
+nb_filter         [50, 50]
+nb_hidden              100
+score             0.416276
+Name: 0, dtype: object
+
+embedding_dims             100
+filter_length       [3, 7, 12]
+max_len                    500
+max_words                15000
+nb_filter         [50, 50, 50]
+nb_hidden                  100
+score                 0.425383
+Name: 0, dtype: object
+
+embedding_dims             100
+filter_length       [3, 7, 12]
+max_len                    500
+max_words                15000
+nb_filter         [50, 50, 50]
+nb_hidden                  150
+score                 0.439335
+Name: 0, dtype: object
+
+embedding_dims             100
+filter_length       [3, 7, 12]
+max_len                    500
+max_words                15000
+nb_filter         [50, 50, 50]
+nb_hidden                  200
+score                 0.426648
+Name: 0, dtype: object
+
+
+
+
